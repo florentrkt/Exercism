@@ -10,15 +10,15 @@ def say(number) :
           30 : 'thirty', 40 : 'forty', 50 : 'fifty', 60 : 'sixty', \
           70 : 'seventy', 80 : 'eighty', 90 : 'ninty',
 
-          100 : 'one hundred',
+          100 : 'one hundred'}
 
-          1000 : 'one thousand'
-
-          }
+    k = 1000
+    m = k * 1000 
+    b = m * 1000
+    t = b * 1000
 
     if number < 0 :
         raise AttributeError
-
 
     if number in d : 
         return d[number]
@@ -32,70 +32,33 @@ def say(number) :
         else : 
             return '%s-%s'%(d[num1],d[num2])
 
-    if number > 1000 :
-        number_trans = format(number, ',d')
-        re.findall(r"(,)", number_trans)
-        # A continuer
+    if number < k : 
+        if number%100 == 0 : 
+            return d[number//100] + ' hundred'
+        else : 
+            return d[number//100] + ' hundred and ' + say(number%100)
+
+    if number < m : 
+        if number%k == 0 : 
+            return say(number//k) + ' thousand'
+        else : 
+            return say(number//k) + ' thousand ' + say(number%k)
+
+    if number < b : 
+        if number%m == 0 : 
+            return say(number//m) + ' million'
+        else : 
+            return say(number//m) + ' million ' + say(number%m)
+
+    if number < t : 
+        if number%b == 0 : 
+            return say(number//b) + ' billion'
+        else : 
+            return say(number//b) + ' billion ' + say(number%b)
+
+    raise AttributeError('num is too large: %s' % str(number))
+    #intéréssant l'utilisation de raise à la fin (erreur si au début du fonction)
 
 
-
-
-
-
-
-
-    # if number in range(100, 1000) :
-    #     l = list(map(int,str(number)))
-    #     num1=l[0]
-    #     num2=l[1]
-    #     num3=l[len(l)-1]
-    #     if number in d :
-    #         return d[number]
-    #     if num2 == 0 :
-    #         return d[num1]+' hundred and '+d[num3]
-    #     else : 
-    #         num4=int(str(num2)+str(num3))
-    #         if num4<20 : 
-    #             return d[num1]+' hundred and '+d[num4]
-    #         else : 
-    #             num2 = int(str(l[1])+'0')
-    #             if num3 == 0 : # for example 50,60, 70, ... 
-    #                 return d[num1]+' hundred and '+d[num2]
-    #             else : 
-    #                 return d[num1]+' hundred and '+d[num2]+'-'+d[num3]
-
-
-    # if number in range(1000,10000) :
-    #     l = list(map(int,str(number)))
-    #     num1=l[0]
-    #     num2=l[1]
-    #     num3=l[2]
-    #     num4=l[len(l)-1]
-    #     if number in d : 
-    #         return d[number]
-    #     if num2 == 0 and num3==0 : 
-    #         return d[num1]+' thousand and '+d[num4]
-    #     if num2 == 0 and int(str(num3)+str(num4))<20 : 
-    #         return d[num1]+' thousand and '+d[int(str(num3)+str(num4))]
-    #     if num2 == 0 and int(str(num3)+str(num4))> 20 : 
-    #         return  d[num1]+' thousand and '+d[int(str(l[2])+'0')]+'-'+d[num4]
-    #     else : 
-    #         x=l.pop(0)
-    #         num1=l[0]
-    #         num2=l[1]
-    #         num3=l[len(l)-1]
-    #         num4=int(str(num2)+str(num3))
-    #         if num4<20 : 
-    #             return d[x]+' thousand '+d[num1]+' hundred and '+d[num4]
-    #         else : 
-    #             num2 = int(str(l[1])+'0')
-    #             if num3 == 0 : # for example 50,60, 70, ... 
-    #                 return d[x]+' thousand '+d[num1]+' hundred and '+d[num2]
-    #             else : 
-    #                 return d[x]+' thousand '+d[num1]+' hundred and '+d[num2]+'-'+d[num3]
-
-            
-if __name__ == '__main__' :
-    print(say(1234567890))
-
-
+# if __name__ == '__main__' :
+#     print(say(135995))
